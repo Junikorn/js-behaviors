@@ -34,7 +34,7 @@
             });
         },
         /**
-         * Method getting title for usecase. Defaults to `$t.title` or empty string. Can be overwritten
+         * Method getting title for usecase. Returns `$t.title - $t.subtitle`, `$t.title` or empty string. Can be overwritten
          */
         getTitle(){
             return this.$t && (this.$t.title + (this.$t.subtitle ? ' - ' + this.$t.subtitle : '')) || '';

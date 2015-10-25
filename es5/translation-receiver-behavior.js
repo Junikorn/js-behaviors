@@ -9,7 +9,7 @@
      * `JS.TranslationReceiverBehavior` allows to use `$t` property as binding provider for translation
      * provided by parent element extending `JS.TranslationProviderBehavior`.
      *
-     * @polymerBehavior
+     * @polymerBehavior JS.TranslationReceiverBehavior
      */
     JS.TranslationReceiverBehavior = {
         properties: {
@@ -20,14 +20,14 @@
         },
         attached: function attached() {
             /**
-             * Fired when element is attached. Unsubscribes parent translation provider.
+             * Fired when element is attached. Subscribes to parent translation provider
              * @event translation-required
              */
             this.fire('translation-required', { target: this });
         },
         detached: function detached() {
             /**
-             * Fired when element is detached. Lets element unsubscribe to parent translation provider.
+             * Fired when element is detached. Unsubscribes from parent translation provider
              * @event translation-released
              */
             this.fire('translation-released', { target: this });

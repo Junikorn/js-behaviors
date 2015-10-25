@@ -21,7 +21,7 @@
         },
         attached(){
             /**
-             * Fired when element is attached. Subscribes to parent context.
+             * Fired when element is attached. Subscribes to parent context
              * @event context-required
              */
             this.fire('context-required', { receiver: this });

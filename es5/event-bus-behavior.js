@@ -21,9 +21,9 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
         /**
          * `JS.EventBusListenerBehavior` allows to use `$e` property as event bus connecting all listeners.
-         * Behavior replaces `<iron-signals>` element functionality without the need of adding any markup to extended elements `<template>`.
+         * Behavior replaces `<iron-signals>` element functionality without the need of adding any markup to extended elements `<template>`
          *
-         * @polymerBehavior
+         * @polymerBehavior JS.EventBusListenerBehavior
          */
 
         /**

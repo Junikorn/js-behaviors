@@ -15,7 +15,7 @@
      * If provider is a child of another provider it will treat its translation as a prototype for own translation.
      * Provider synchronises language with `$c.lang` context property therefore it also extends `JS.ContextReceiverBehavior`.
      *
-     * Translation files should be named {element.is}_ln-LN.json or {element.is}_ln.json.
+     * Translation files should be named {element.is}_{ln}-{LN}.json or {element.is}_{ln}.json.
      * @polymerBehavior JS.TranslationProviderBehavior
      */
     JS.TranslationProviderBehaviorImpl = {
@@ -85,19 +85,18 @@
         },
         attached: function attached() {
             /**
-             * Fired when element is attached. Lets element check if there is some more base translation to set as a prototype.
+             * Fired when element is attached. Subscribes base translation to parent provider if exists
              * @event translation-required
              */
             this.fire('translation-required', { base: this });
         },
         detached: function detached() {
             /**
-             * Fired when element is detached. Unsubscribes parent translation provider.
+             * Fired when element is detached. Unsubscribes from parent translation provider
              * @event translation-released
              */
             this.fire('translation-released', { base: this });
         },
-
         //Method registering elements that require translation
         _$tRegisterElement: function registerElement(e) {
             var detail = e.detail,
@@ -108,7 +107,6 @@
                 array.push(element);
             }
         },
-
         //Method unregistering elements that no longer require translation
         _$tUnregisterElement: function unregisterElement(e) {
             var detail = e.detail,
@@ -117,7 +115,6 @@
                 index = array.indexOf(element);
             array.splice(index, 1);
         },
-
         //Method acquiring translation
         _$tGetTranslation: function getTranslation(lang, handleOnFail) {
             var _this = this;
@@ -151,7 +148,6 @@
                 });
             }
         },
-
         //Method performing translation
         _$tTranslate: function translate(_$tBase, _$t) {
             var _this2 = this;

@@ -6,7 +6,7 @@
     /**
      * `JS.SettingsProviderBehavior` allows to attach element's settings (`$s`) to all of it's children extending `JS.SettingsReceiverBehavior`
      *
-     * @polymerBehavior
+     * @polymerBehavior JS.SettingsProviderBehavior
      */
     JS.SettingsProviderBehavior = {
         properties: {

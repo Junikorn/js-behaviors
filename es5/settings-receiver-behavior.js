@@ -8,7 +8,7 @@
     /**
      * `JS.SettingsReceiverBehavior` allows to attach parent's settings (`$s`) to extending element
      *
-     * @polymerBehavior
+     * @polymerBehavior JS.SettingsReceiverBehavior
      */
     JS.SettingsReceiverBehavior = {
         properties: {
@@ -20,7 +20,7 @@
         },
         attached: function attached() {
             /**
-             * Fired when element is attached. Subscribes to parent settings.
+             * Fired when element is attached. Subscribes to parent settings
              * @event settings-required
              */
             this.fire('settings-required', { receiver: this });
