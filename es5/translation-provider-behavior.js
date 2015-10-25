@@ -15,7 +15,7 @@
      * If provider is a child of another provider it will treat its translation as a prototype for own translation.
      * Provider synchronises language with `$c.lang` context property therefore it also extends `JS.ContextReceiverBehavior`.
      *
-     * Translation files should be named {element.is}_{ln}-{LN}.json or {element.is}_{ln}.json.
+     * Translation files should be named {element.is}\_{ln}-{LN}.json or {element.is}\_{ln}.json.
      * @polymerBehavior JS.TranslationProviderBehavior
      */
     JS.TranslationProviderBehaviorImpl = {
