@@ -1,0 +1,35 @@
+{
+  "name": "js-behaviors",
+  "description": "Set of Polymer behaviors providing basic building blocks for every sophisticated one site app",
+  "private": false,
+  "authors": [
+    "Błażej Wolańczyk"
+  ],
+  "keywords": [
+    "web-components",
+    "polymer",
+    "ajax",
+    "context",
+    "event bus",
+    "translate",
+    "translation"
+  ],
+  "main": "js-behaviors.html",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/Junikorn/js-behaviors.git"
+  },
+  "license": "BSD",
+  "homepage": "https://github.com/Junikorn/js-behaviors",
+  "ignore": [],
+  "dependencies": {
+    "promise-polyfill": "polymerlabs/promise-polyfill#^1.0.0",
+    "polymer": "Polymer/polymer#^1.0.0"
+  },
+  "devDependencies": {
+    "iron-component-page": "polymerelements/iron-component-page#^1.0.0",
+    "test-fixture": "polymerelements/test-fixture#^1.0.0",
+    "web-component-tester": "*",
+    "webcomponentsjs": "webcomponents/webcomponentsjs#^0.7.0"
+  }
+}
