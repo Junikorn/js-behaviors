@@ -9,7 +9,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
     window.JS = window.JS || {};
 
-    var connectors = new Set(); //list of all subscribed connectors
+    var connectors = []; //list of all subscribed connectors
 
     var EventBusConnector = (function () {
         function EventBusConnector(element) {
@@ -59,8 +59,8 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
         }, {
             key: 'addEventListener',
             value: function addEventListener(event, callback) {
-                this.connector[event] = this.connector[event] || new Set();
-                this.connector[event].add(callback);
+                this.connector[event] = this.connector[event] || [];
+                this.connector[event].push(callback);
                 return {
                     e: event,
                     c: callback
@@ -73,7 +73,9 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
         }, {
             key: 'removeEventListener',
             value: function removeEventListener(descriptor) {
-                this.connector[descriptor.e].remove(descriptor.c);
+                var array = this.connector[descriptor.e],
+                    index = array.indexOf(descriptor.c);
+                array.splice(index, 1);
             }
 
             /**
@@ -82,7 +84,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
         }, {
             key: 'subscribe',
             value: function subscribe() {
-                connectors.add(this.connector);
+                connectors.push(this.connector);
             }
 
             /**
@@ -91,7 +93,16 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
         }, {
             key: 'unsubscribe',
             value: function unsubscribe() {
-                connectors['delete'](this.connector);
+                connectors.splice(connectors.indexOf(this.connector), 1);
+            }
+
+            /**
+             * @property $e.subscribed
+             */
+        }, {
+            key: 'subscribed',
+            get: function get() {
+                return connectors.indexOf(this.connector) > -1;
             }
         }]);
 
@@ -109,6 +120,8 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
              * - `fire(eventName, details)` - fires event on bus
              * - `unsubscribe()` - unsubscribes from event bus
              * - `subscribe()` - subscribes to event bus
+             *
+             * You can also check property `subscribed` for current subscription status
              * @default new EventBusConnector()
              */
             $e: {
