@@ -33,7 +33,7 @@ IE 10+ ✔ | Latest ✔ | Latest ✔ | Latest ✔ | Latest ✔ |
 
 ## History
 
-For detailed changelog, check [Releases](https://github.com/polymoar/js-behaviors/releases).
+For detailed changelog, check [Releases](https://github.com/Junikorn/js-behaviors/releases).
 
 ## License (BSD)
 
