@@ -3,7 +3,7 @@ js-behaviors
 
 [![Bower version](https://badge.fury.io/bo/js-behaviors.svg)](http://badge.fury.io/bo/js-behaviors)
 
-See the [component page](https://polymoar.github.io/components/js-behaviors) for documentation.
+See the [component page](https://polymoar.github.io/components/js-behaviors/es5) for documentation.
 
 This package is written using ES2015. If you do not use [babel](https://babeljs.io/) in your build please import sources from es5 directory.
 
