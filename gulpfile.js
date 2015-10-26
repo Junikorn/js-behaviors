@@ -43,6 +43,11 @@ gulp.task('clean', function(cb){
 
 // Build production files, the default task
 gulp.task('default', ['clean'], function(cb){
+    runSequence('jshint', 'js', 'wct:local', cb);
+});
+
+// Build production files without testing
+gulp.task('build', ['clean'], function(cb){
     runSequence('jshint', 'js', cb);
 });
 

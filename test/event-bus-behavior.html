@@ -1,0 +1,121 @@
+<!doctype html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+    <title>my-list-basic</title>
+
+    <script src="../bower_components/webcomponentsjs/webcomponents.js"></script>
+    <script src="../bower_components/web-component-tester/browser.js"></script>
+    <script src="../bower_components/test-fixture/test-fixture-mocha.js"></script>
+    <link rel="import" href="../bower_components/test-fixture/test-fixture.html">
+
+    <!-- Import the element to test -->
+    <link rel="import" href="../es5/event-bus-listener-behavior.html">
+
+</head>
+<body>
+
+<test-fixture id="single">
+    <template>
+        <test-helper></test-helper>
+    </template>
+</test-fixture>
+
+<test-fixture id="inside-tree-propagation">
+    <template>
+        <test-helper>
+            <div>
+                <test-helper id="contained"></test-helper>
+            </div>
+        </test-helper>
+    </template>
+</test-fixture>
+
+<test-fixture id="sibling-propagation">
+    <template>
+        <test-helper></test-helper>
+        <test-helper></test-helper>
+    </template>
+</test-fixture>
+
+<script>
+    suite('EventBusBehavior', function(){
+
+        suiteSetup(function(){
+            Polymer({
+                is: 'test-helper',
+                behaviors: [JS.EventBusListenerBehavior]
+            });
+        });
+
+        test('Should set up interface methods', function(){
+            var element = fixture('single');
+            assert.isObject(element.$e, '$e property populated with event bus connector');
+            assert.isFunction(element.$e.addEventListener, '$e.addEventListener present');
+            assert.isFunction(element.$e.removeEventListener, '$e.removeEventListener present');
+            assert.isFunction(element.$e.fire, '$e.fire present');
+            assert.isFunction(element.$e.subscribe, '$e.subscribe present');
+            assert.isFunction(element.$e.unsubscribe, '$e.unsubscribe present');
+            assert.isBoolean(element.$e.subscribed, '$e.subscribed present');
+        });
+
+        test('Should subscribe on attach', function(){
+            var element = fixture('single');
+            assert.isTrue(element.$e.subscribed, 'subscribed on attach');
+        });
+
+        test('Should unsubscribe on detach', function(){
+            var element = fixture('single');
+            element.remove();
+            assert.isFalse(element.$e.subscribed, 'unsubscribed on detach');
+        });
+
+        test('Should listen to self', function(){
+            var received = false,
+                element = fixture('single');
+            element.$e.addEventListener('test', function(e){
+                received = e;
+            });
+            element.$e.fire('test', {});
+            assert.ok(received, 'event received');
+        });
+
+        test('Should listen to parent', function(){
+            var received = false,
+                parentElement = fixture('inside-tree-propagation'),
+                childElement = Polymer.dom(parentElement).querySelector('#contained');
+            childElement.$e.addEventListener('test', function(e){
+                received = e;
+            });
+            parentElement.$e.fire('test', {});
+            assert.ok(received, 'event received');
+        });
+
+        test('Should listen to child', function(){
+            var received = false,
+                    parentElement = fixture('inside-tree-propagation'),
+                    childElement = Polymer.dom(parentElement).querySelector('#contained');
+            parentElement.$e.addEventListener('test', function(e){
+                received = e;
+            });
+            childElement.$e.fire('test', {});
+            assert.ok(received, 'event received');
+        });
+
+        test('Should listen to sibling', function(){
+            var received = false,
+                elements = fixture('sibling-propagation'),
+                element1 = elements[0],
+                element2 = elements[1];
+            element2.$e.addEventListener('test', function(e){
+                received = e;
+            });
+            element1.$e.fire('test', {});
+            assert.ok(received, 'event received');
+        });
+
+    });
+</script>
+
+</body>
+</html>
