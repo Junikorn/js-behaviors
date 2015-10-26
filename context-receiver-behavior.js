@@ -26,7 +26,7 @@
              */
             this.fire('context-required', { receiver: this });
             this.$e.addEventListener('context-changed', (e) => {
-                if(e.sourceElement !== this){
+                if(e.srcElement !== this){
                     this.notifyPath('$c.' + e.detail.path, e.detail.value);
                 }
             });

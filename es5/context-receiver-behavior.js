@@ -30,7 +30,7 @@
              */
             this.fire('context-required', { receiver: this });
             this.$e.addEventListener('context-changed', function (e) {
-                if (e.sourceElement !== _this) {
+                if (e.srcElement !== _this) {
                     _this.notifyPath('$c.' + e.detail.path, e.detail.value);
                 }
             });

@@ -31,10 +31,16 @@
     </template>
 </test-fixture>
 
-<test-fixture id="sibling-propagation">
+<test-fixture id="subtree-independent-propagation">
     <template>
-        <test-helper></test-helper>
-        <test-helper></test-helper>
+        <div>
+            <test-helper id="el1"></test-helper>
+        </div>
+        <div>
+            <div>
+                <test-helper id="el2"></test-helper>
+            </div>
+        </div>
     </template>
 </test-fixture>
 
@@ -51,12 +57,12 @@
         test('Should set up interface methods', function(){
             var element = fixture('single');
             assert.isObject(element.$e, '$e property populated with event bus connector');
-            assert.isFunction(element.$e.addEventListener, '$e.addEventListener present');
-            assert.isFunction(element.$e.removeEventListener, '$e.removeEventListener present');
-            assert.isFunction(element.$e.fire, '$e.fire present');
-            assert.isFunction(element.$e.subscribe, '$e.subscribe present');
-            assert.isFunction(element.$e.unsubscribe, '$e.unsubscribe present');
-            assert.isBoolean(element.$e.subscribed, '$e.subscribed present');
+            assert.isFunction(element.$e.addEventListener, '$e.addEventListener set');
+            assert.isFunction(element.$e.removeEventListener, '$e.removeEventListener set');
+            assert.isFunction(element.$e.fire, '$e.fire set');
+            assert.isFunction(element.$e.subscribe, '$e.subscribe set');
+            assert.isFunction(element.$e.unsubscribe, '$e.unsubscribe set');
+            assert.isBoolean(element.$e.subscribed, '$e.subscribed set');
         });
 
         test('Should subscribe on attach', function(){
@@ -78,6 +84,21 @@
             });
             element.$e.fire('test', {});
             assert.ok(received, 'event received');
+        });
+
+        test('Should send proper event', function(){
+            var event = false,
+                element = fixture('single'),
+                detail = {};
+            element.$e.addEventListener('test', function(e){
+                event = e;
+            });
+            element.$e.fire('test', detail);
+            assert.ok(event, 'event received');
+            assert.equal(event.type, 'test', 'proper type set');
+            assert.equal(event.srcElement, element, 'proper event source set');
+            assert.typeOf(event.timeStamp, 'number', 'proper timestamp set');
+            assert.equal(event.detail, detail, 'proper detail set');
         });
 
         test('Should listen to parent', function(){
@@ -102,11 +123,11 @@
             assert.ok(received, 'event received');
         });
 
-        test('Should listen to sibling', function(){
+        test('Should listen to other subtree', function(){
+            fixture('subtree-independent-propagation');
             var received = false,
-                elements = fixture('sibling-propagation'),
-                element1 = elements[0],
-                element2 = elements[1];
+                element1 = document.querySelector('#el1'),
+                element2 = document.querySelector('#el2');
             element2.$e.addEventListener('test', function(e){
                 received = e;
             });

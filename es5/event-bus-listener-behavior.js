@@ -43,7 +43,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
                                     type: event,
                                     detail: data,
                                     timeStamp: new Date().getTime(),
-                                    sourceElement: _this.element
+                                    srcElement: _this.element
                                 });
                             } catch (e) {
                                 console.warn(e);

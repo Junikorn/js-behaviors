@@ -22,7 +22,7 @@
                                 type: event,
                                 detail: data,
                                 timeStamp: new Date().getTime(),
-                                sourceElement: this.element
+                                srcElement: this.element
                             });
                         }catch(e){
                             console.warn(e);
