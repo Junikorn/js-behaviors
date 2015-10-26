@@ -19,7 +19,7 @@
     "type": "git",
     "url": "git://github.com/Junikorn/js-behaviors.git"
   },
-  "license": "BSD",
+  "license": "BSD-2-Clause",
   "homepage": "https://github.com/Junikorn/js-behaviors",
   "ignore": [],
   "dependencies": {

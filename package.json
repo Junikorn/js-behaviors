@@ -6,7 +6,7 @@
     "name": "Błażej Wolańczyk",
     "url": "https://github.com/Junikorn"
   },
-  "license": "BSD",
+  "license": "BSD-2-Clause",
   "description": "Set of Polymer behaviors providing basic building blocks for every sophisticated one site app",
   "devDependencies": {
     "del": "^1.1.1",
