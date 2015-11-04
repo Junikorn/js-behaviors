@@ -116,6 +116,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
         /**
          * @method $http
          * @param {Object} options
+         * @returns {Promise} request promise
          */
 
         /**
@@ -292,14 +293,25 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
     function ajax(options) {
         /*jshint validthis:true */
-        var request = new Request(options);
+        var request = new Request(options),
+            promise = request.send();
         if (typeof this !== 'undefined' && this.__isPolymerInstance__) {
             //if called from polymer element scope
             this.fire('request-sent', request);
         }
 
-        return request.send();
+        ajax.interceptors.forEach(function (interceptor) {
+            if (interceptor.res && interceptor.rej || interceptor.res) {
+                promise.then(interceptor.res, interceptor.rej);
+            } else {
+                promise['catch'](interceptor.rej);
+            }
+        });
+
+        return promise;
     }
+
+    ajax.interceptors = [];
 
     //utility method
     function prepareOptions(options, body) {
@@ -314,6 +326,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
      * @method $http.get
      * @param {Object|String} options - options hash map or target url
      * @param {Object} [body] - body if options were URL string
+     * @returns {Promise} request promise
      */
     ajax.get = function ajaxGet(options, body) {
         return ajax.call(this, prepareOptions(options, body));
@@ -323,6 +336,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
      * @method $http.post
      * @param {Object|String} options - options hash map or target url
      * @param {Object} [body] - body if options were URL string
+     * @returns {Promise} request promise
      */
     ajax.post = function ajaxPost(options, body) {
         options = prepareOptions(options, body);
@@ -334,6 +348,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
      * @method $http.put
      * @param {Object|String} options - options hash map or target url
      * @param {Object} [body] - body if options were URL string
+     * @returns {Promise} request promise
      */
     ajax.put = function ajaxPut(options, body) {
         options = prepareOptions(options, body);
@@ -345,11 +360,24 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
      * @method $http.delete
      * @param {Object|String} options - options hash map or target url
      * @param {Object} [body] - body if options were URL string
+     * @returns {Promise} request promise
      */
     ajax['delete'] = function ajaxDelete(options, body) {
         options = prepareOptions(options, body);
         options.method = 'DELETE';
         return ajax.call(this, options);
+    };
+
+    /**
+     * @method $http.intercept
+     * @param {Function} resolvedInterceptor
+     * @param {Function} rejectedInterceptor
+     */
+    ajax.intercept = function intercept(resolvedInterceptor, rejectedInterceptor) {
+        ajax.interceptors.push({
+            res: resolvedInterceptor,
+            rej: rejectedInterceptor
+        });
     };
 
     /**

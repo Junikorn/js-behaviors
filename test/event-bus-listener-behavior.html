@@ -4,41 +4,42 @@
     <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
     <title>my-list-basic</title>
 
-    <script src="../bower_components/webcomponentsjs/webcomponents.js"></script>
-    <script src="../bower_components/web-component-tester/browser.js"></script>
-    <script src="../bower_components/test-fixture/test-fixture-mocha.js"></script>
-    <link rel="import" href="../bower_components/test-fixture/test-fixture.html">
+    <script src="../../webcomponentsjs/webcomponents.js"></script>
+    <script src="../../web-component-tester/browser.js"></script>
+    <script src="../../test-fixture/test-fixture-mocha.js"></script>
+    <link rel="import" href="../../test-fixture/test-fixture.html">
 
     <!-- Import the element to test -->
     <link rel="import" href="../es5/event-bus-listener-behavior.html">
+    <link rel="import" href="helpers/event-bus-listener.html">
 
 </head>
 <body>
 
 <test-fixture id="single">
     <template>
-        <test-helper></test-helper>
+        <event-bus-listener></event-bus-listener>
     </template>
 </test-fixture>
 
 <test-fixture id="inside-tree-propagation">
     <template>
-        <test-helper>
+        <event-bus-listener>
             <div>
-                <test-helper id="contained"></test-helper>
+                <event-bus-listener id="contained"></event-bus-listener>
             </div>
-        </test-helper>
+        </event-bus-listener>
     </template>
 </test-fixture>
 
 <test-fixture id="subtree-independent-propagation">
     <template>
         <div>
-            <test-helper id="el1"></test-helper>
+            <event-bus-listener id="el1"></event-bus-listener>
         </div>
         <div>
             <div>
-                <test-helper id="el2"></test-helper>
+                <event-bus-listener id="el2"></event-bus-listener>
             </div>
         </div>
     </template>
@@ -46,13 +47,6 @@
 
 <script>
     suite('EventBusBehavior', function(){
-
-        suiteSetup(function(){
-            Polymer({
-                is: 'test-helper',
-                behaviors: [JS.EventBusListenerBehavior]
-            });
-        });
 
         test('Should set up interface methods', function(){
             var element = fixture('single');
@@ -70,10 +64,13 @@
             assert.isTrue(element.$e.subscribed, 'subscribed on attach');
         });
 
-        test('Should unsubscribe on detach', function(){
+        test('Should unsubscribe on detach', function(done){
             var element = fixture('single');
             element.remove();
-            assert.isFalse(element.$e.subscribed, 'unsubscribed on detach');
+            setTimeout(function(){
+                assert.isFalse(element.$e.subscribed, 'unsubscribed on detach');
+                done();
+            }, 1);
         });
 
         test('Should listen to self', function(){

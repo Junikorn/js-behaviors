@@ -1,6 +1,6 @@
 {
   "name": "js-behaviors",
-  "description": "Set of Polymer behaviors providing basic building blocks for every sophisticated one site app",
+  "description": "Set of Polymer behaviors providing basic building blocks for one site app",
   "private": false,
   "authors": [
     "Błażej Wolańczyk"
@@ -24,7 +24,7 @@
   "ignore": [],
   "dependencies": {
     "promise-polyfill": "polymerlabs/promise-polyfill#^1.0.0",
-    "polymer": "Polymer/polymer#^1.0.0"
+    "polymer": "Polymer/polymer#^1.2.1"
   },
   "devDependencies": {
     "iron-component-page": "polymerelements/iron-component-page#^1.0.0",
