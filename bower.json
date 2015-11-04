@@ -1,6 +1,6 @@
 {
   "name": "js-behaviors",
-  "description": "Set of Polymer behaviors providing basic building blocks for one site app",
+  "description": "Set of Polymer behaviors providing basic building blocks for one site apps",
   "private": false,
   "authors": [
     "Błażej Wolańczyk"

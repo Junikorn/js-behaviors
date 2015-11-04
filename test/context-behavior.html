@@ -1,0 +1,94 @@
+<!doctype html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+    <title>context-behavior</title>
+
+    <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
+    <script src="../../web-component-tester/browser.js"></script>
+    <script src="../../test-fixture/test-fixture-mocha.js"></script>
+    <link rel="import" href="../../test-fixture/test-fixture.html">
+
+    <!-- Import the element to test -->
+    <link rel="import" href="../es5/context-behavior.html">
+    <link rel="import" href="helpers/context-provider.html">
+    <link rel="import" href="helpers/context-receiver.html">
+
+</head>
+<body>
+
+<test-fixture id="context">
+    <template>
+        <context-provider id="provider">
+            <context-receiver id="receiver1"></context-receiver>
+            <div>
+                <context-receiver id="receiver2">
+                    <context-receiver id="receiver3"></context-receiver>
+                </context-receiver>
+            </div>
+        </context-provider>
+    </template>
+</test-fixture>
+
+<script>
+    suite('ContextBehavior', function(){
+
+        test('Should set up provider interface methods', function(){
+            var provider = fixture('context');
+            assert.isObject(provider.$c, '$e property populated');
+            assert.isFunction(provider.$c.set, '$c.set set');
+            assert.isFunction(provider.$c.notifyPath, '$c.notifyPath set');
+            assert.ok(provider.$c.initial, '$c initial value present');
+        });
+
+        test('Should set up provider context object on all receivers', function(){
+            var provider = fixture('context'),
+                receiver1 = Polymer.dom(provider).querySelector('#receiver1'),
+                receiver2 = Polymer.dom(provider).querySelector('#receiver2'),
+                receiver3 = Polymer.dom(provider).querySelector('#receiver3');
+            assert.equal(provider.$c, receiver1.$c, '$c passed to receiver #1');
+            assert.equal(provider.$c, receiver2.$c, '$c passed to receiver #2');
+            assert.equal(provider.$c, receiver3.$c, '$c passed to receiver #3');
+        });
+
+        test('Should propagate context changes from provider to all elements', function(){
+            var provider = fixture('context'),
+                receiver1 = Polymer.dom(provider).querySelector('#receiver1'),
+                receiver2 = Polymer.dom(provider).querySelector('#receiver2'),
+                receiver3 = Polymer.dom(provider).querySelector('#receiver3'),
+                propagated = {};
+            provider.$c.set('propagated', propagated);
+            assert.equal(propagated, provider.propagated, 'saved and notified provider');
+            assert.equal(propagated, receiver1.propagated, 'propagated to receiver #1 and notified');
+            assert.equal(propagated, receiver2.propagated, 'propagated to receiver #2 and notified');
+            assert.equal(propagated, receiver3.propagated, 'propagated to receiver #3 and notified');
+        });
+
+        test('Should propagate context changes from receiver to all elements', function(){
+            var provider = fixture('context'),
+                receiver1 = Polymer.dom(provider).querySelector('#receiver1'),
+                receiver2 = Polymer.dom(provider).querySelector('#receiver2'),
+                receiver3 = Polymer.dom(provider).querySelector('#receiver3'),
+                propagated = {};
+            receiver3.$c.set('propagated', propagated);
+            assert.equal(propagated, receiver3.propagated, 'saved and notified receiver #3');
+            assert.equal(propagated, receiver1.propagated, 'propagated to receiver #1 and notified');
+            assert.equal(propagated, receiver2.propagated, 'propagated to receiver #2 and notified');
+            assert.equal(propagated, provider.propagated, 'propagated to provider and notified');
+        });
+
+        test('Should pass srcElement in event if context passed', function(done){
+            var provider = fixture('context'),
+                receiver = Polymer.dom(provider).querySelector('#receiver3');
+            provider.$e.addEventListener('context-changed', function(e){
+                assert.equal(e.srcElement, receiver, 'passes proper srcElement in event if context passed');
+                done();
+            });
+            receiver.$c.set('propagated', {}, receiver);
+        });
+
+    });
+</script>
+
+</body>
+</html>
