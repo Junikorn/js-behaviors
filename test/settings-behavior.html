@@ -1,0 +1,54 @@
+<!doctype html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+    <title>settings-behavior</title>
+
+    <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
+    <script src="../../web-component-tester/browser.js"></script>
+    <script src="../../test-fixture/test-fixture-mocha.js"></script>
+    <link rel="import" href="../../test-fixture/test-fixture.html">
+
+    <!-- Import the element to test -->
+    <link rel="import" href="../es5/settings-behavior.html">
+    <link rel="import" href="helpers/settings-helpers.html">
+
+</head>
+<body>
+
+<test-fixture id="settings">
+    <template>
+        <settings-provider id="provider">
+            <settings-receiver id="receiver1"></settings-receiver>
+            <div>
+                <settings-receiver id="receiver2">
+                    <settings-receiver id="receiver3"></settings-receiver>
+                </settings-receiver>
+            </div>
+        </settings-provider>
+    </template>
+</test-fixture>
+
+<script>
+    suite('SettingsBehavior', function(){
+
+        test('Should pass settings to all receivers', function(){
+            var provider = fixture('settings'),
+                receiver1 = Polymer.dom(provider).querySelector('#receiver1'),
+                receiver2 = Polymer.dom(provider).querySelector('#receiver2'),
+                receiver3 = Polymer.dom(provider).querySelector('#receiver3');
+            assert.equal(provider.$s, receiver1.$s, '$s passed to receiver #1');
+            assert.equal(provider.$s, receiver2.$s, '$s passed to receiver #2');
+            assert.equal(provider.$s, receiver3.$s, '$s passed to receiver #3');
+        });
+
+        test('Should use provider settings initial object', function(){
+            var provider = fixture('settings');
+            assert.ok(provider.$s.initial, '$s set to provider initial value');
+        });
+
+    });
+</script>
+
+</body>
+</html>

@@ -21,4 +21,17 @@
             return this.$c.propagated;
         }
     });
+
+    Polymer({
+        is: 'context-receiver',
+        behaviors: [JS.ContextReceiverBehavior],
+        properties: {
+            propagated: {
+                computed: 'compute($c.propagated)'
+            }
+        },
+        compute: function(){
+            return this.$c.propagated;
+        }
+    });
 </script>

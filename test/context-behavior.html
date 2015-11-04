@@ -11,8 +11,7 @@
 
     <!-- Import the element to test -->
     <link rel="import" href="../es5/context-behavior.html">
-    <link rel="import" href="helpers/context-provider.html">
-    <link rel="import" href="helpers/context-receiver.html">
+    <link rel="import" href="helpers/context-helpers.html">
 
 </head>
 <body>
@@ -77,11 +76,11 @@
             assert.equal(propagated, provider.propagated, 'propagated to provider and notified');
         });
 
-        test('Should pass srcElement in event if context passed', function(done){
+        test('Should pass proper srcElement in event if context passed', function(done){
             var provider = fixture('context'),
                 receiver = Polymer.dom(provider).querySelector('#receiver3');
             provider.$e.addEventListener('context-changed', function(e){
-                assert.equal(e.srcElement, receiver, 'passes proper srcElement in event if context passed');
+                assert.equal(e.srcElement, receiver, 'proper srcElement set in event if context passed');
                 done();
             });
             receiver.$c.set('propagated', {}, receiver);
