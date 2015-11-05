@@ -23,16 +23,14 @@
              * @default 'i18n/'
              */
             $tUrl: {
-                type: String,
-                value(){ return this.$s && this.$s.i18n || 'i18n/'; }
+                type: String
             },
             /**
              * Default language for translation. If element is extending `JS.Settings{Provider|Receiver}Behavior` it will default to `$s.defaultLang`.
              * @default 'en'
              */
             $tDefaultLang: {
-                type: String,
-                value(){ return this.$s && this.$s.defaultLang || 'en'; }
+                type: String
             },
             _$tBaseListeners: {
                 type: Array,
@@ -75,6 +73,9 @@
              * @event translation-required
              */
             this.fire('translation-required', { base: this });
+            //set initial values
+            this.$tDefaultLang = this.$tDefaultLang || this._$tGetDefaultLang();
+            this.$tUrl = this.$tUrl || this._$tGetUrl();
         },
         detached(){
             /**
@@ -82,6 +83,14 @@
              * @event translation-released
              */
             this.fire('translation-released', { base: this });
+        },
+        //Method computing locales url
+        _$tGetUrl: function getUrl(){
+            return this.$s && this.$s.i18n || 'i18n/';
+        },
+        //Method computing default language
+        _$tGetDefaultLang: function getDefaultLang() {
+            return this.$s && this.$s.defaultLang || 'en';
         },
         //Method registering elements that require translation
         _$tRegisterElement: function registerElement(e){
