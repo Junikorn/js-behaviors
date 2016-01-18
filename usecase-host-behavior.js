@@ -24,9 +24,6 @@
                 usecase._setTitle();
                 usecase.selected();
                 usecase.scrollTop = 0;
-                if(this.$c && this.$c.set){
-                    this.$c.set('usecase', usecase);
-                }
             }
         }
     };

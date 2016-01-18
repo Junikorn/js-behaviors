@@ -48,6 +48,6 @@
             //placeholder
         }
     };
-    JS.UsecaseBehavior = [Polymer.NeonAnimatableBehavior, JS.UsecaseBehaviorImpl, JS.ContextReceiverBehavior];
+    JS.UsecaseBehavior = [JS.UsecaseBehaviorImpl, JS.ContextReceiverBehavior];
 })();
 //# sourceMappingURL=usecase-behavior.js.map
