@@ -67,15 +67,17 @@
             'translation-required': '_$tRegisterElement',
             'translation-released': '_$tUnregisterElement'
         },
+        ready(){
+            //set initial values
+            this.$tDefaultLang = this.$tDefaultLang || this._$tGetDefaultLang();
+            this.$tUrl = this.$tUrl || this._$tGetUrl();
+        },
         attached(){
             /**
              * Fired when element is attached. Subscribes base translation to parent provider if exists
              * @event translation-required
              */
             this.fire('translation-required', { base: this });
-            //set initial values
-            this.$tDefaultLang = this.$tDefaultLang || this._$tGetDefaultLang();
-            this.$tUrl = this.$tUrl || this._$tGetUrl();
         },
         detached(){
             /**

@@ -422,14 +422,11 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
          * @param {String} [options.handleAs='json']
          * @returns {Promise} request promise
          **/
-        $http: function $http(options) {
-            //THIS IS A PLACEHOLDER!!! I attached the function at init because the `<iron-component-page>` wasn't recognizing it
-            /**
-             * Fired when XHR request is sent
-             * @event request-sent
-             */
-            return ajax(options);
-        }
+        $http: ajax
+        /**
+         * Fired when XHR request is sent
+         * @event request-sent
+         */
     };
 })();
 //# sourceMappingURL=ajax-behavior.js.map
