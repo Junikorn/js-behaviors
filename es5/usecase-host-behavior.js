@@ -11,6 +11,16 @@
      * @polymerBehavior JS.UsecaseHostBehavior
      */
     JS.UsecaseHostBehaviorImpl = {
+        properties: {
+            /**
+             * Selected usecase instance
+             * @default null
+             */
+            _selectedUsecase: {
+                type: Object,
+                value: null
+            }
+        },
         listeners: {
             'iron-select': '_selectUsecase',
             'usecase-selected': '_selectUsecase'
@@ -22,6 +32,7 @@
         _selectUsecase: function _selectUsecase(e) {
             var usecase = e.detail.item;
             if (usecase.__isPolymerInstance__ && usecase.behaviors.indexOf(JS.UsecaseBehaviorImpl) > -1) {
+                this._selectedUsecase = usecase;
                 e.stopPropagation();
                 usecase._setTitle();
                 usecase.selected();
