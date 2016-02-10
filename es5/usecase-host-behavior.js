@@ -10,7 +10,7 @@
      *
      * @polymerBehavior JS.UsecaseHostBehavior
      */
-    JS.UsecaseHostBehaviorImpl = {
+    JS.UsecaseHostBehavior = {
         properties: {
             /**
              * Selected usecase instance
@@ -23,7 +23,7 @@
         },
         listeners: {
             'iron-select': '_selectUsecase',
-            'usecase-selected': '_selectUsecase'
+            'usecase-select': '_selectUsecase'
         },
         /**
          * Method managing selected usecase activation cycle
@@ -31,15 +31,14 @@
          */
         _selectUsecase: function _selectUsecase(e) {
             var usecase = e.detail.item;
-            if (usecase.__isPolymerInstance__ && usecase.behaviors.indexOf(JS.UsecaseBehaviorImpl) > -1) {
+            if (usecase.__isPolymerInstance__ && usecase.behaviors.indexOf(JS.UsecaseBehavior) > -1) {
+                this._selectedUsecase._selected = false;
                 this._selectedUsecase = usecase;
-                e.stopPropagation();
-                usecase._setTitle();
-                usecase.selected();
+                usecase._selected = true;
                 usecase.scrollTop = 0;
+                e.stopPropagation();
             }
         }
     };
-    JS.UsecaseHostBehavior = [JS.ContextProviderBehavior, JS.UsecaseHostBehaviorImpl];
 })();
 //# sourceMappingURL=usecase-host-behavior.js.map

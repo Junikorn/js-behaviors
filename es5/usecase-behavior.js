@@ -10,44 +10,24 @@
      *
      * @polymerBehavior JS.UsecaseBehavior
      */
-    JS.UsecaseBehaviorImpl = {
+    JS.UsecaseBehavior = {
         properties: {
             /**
+             * Property showing if usecase is currently active
+             */
+            _selected: {
+                type: Boolean,
+                value: false
+            },
+            /**
              * Placeholder for array of rights required to open view (sugar property)
+             * @default null
              */
             requiredRights: {
                 type: Array,
                 value: null
             }
-        },
-        observers: ['_setTitle($t)'],
-        /**
-         * Method setting title in context and document if usecase is selected
-         */
-        _setTitle: function _setTitle() {
-            var _this = this;
-
-            this.async(function () {
-                var title = _this.getTitle();
-                document.title = title;
-                if (_this.$c && _this === _this.$c.usecase) {
-                    _this.$c.set('title', title);
-                }
-            });
-        },
-        /**
-         * Method getting title for usecase. Returns `$t.title - $t.subtitle`, `$t.title` or empty string. Can be overwritten
-         */
-        getTitle: function getTitle() {
-            return this.$t && this.$t.title + (this.$t.subtitle ? ' - ' + this.$t.subtitle : '') || '';
-        },
-        /**
-         * Method executed when usecase is selected. Should be overwritten
-         */
-        selected: function selected() {
-            //placeholder
         }
     };
-    JS.UsecaseBehavior = [JS.UsecaseBehaviorImpl, JS.ContextReceiverBehavior];
 })();
 //# sourceMappingURL=usecase-behavior.js.map
