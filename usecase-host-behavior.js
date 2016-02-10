@@ -30,7 +30,9 @@
         _selectUsecase(e){
             var usecase = e.detail.item;
             if(usecase.__isPolymerInstance__ && usecase.behaviors.indexOf(JS.UsecaseBehavior) > -1){
-                this._selectedUsecase._selected = false;
+                if(this._selectedUsecase){
+                    this._selectedUsecase._selected = false;
+                }
                 this._selectedUsecase = usecase;
                 usecase._selected = true;
                 usecase.scrollTop = 0;
