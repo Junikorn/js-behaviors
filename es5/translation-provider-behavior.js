@@ -67,9 +67,7 @@
              */
             $t: {
                 type: Object,
-                value: function value() {
-                    return {};
-                }
+                value: null
             }
         },
         observers: ['_$tTranslate(_$tBase, _$t)'],

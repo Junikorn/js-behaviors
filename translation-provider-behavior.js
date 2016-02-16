@@ -57,7 +57,7 @@
              */
             $t: {
                 type: Object,
-                value(){ return {}; }
+                value: null
             }
         },
         observers: [
