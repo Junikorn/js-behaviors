@@ -48,17 +48,11 @@
                 type: Object,
                 value(){ return {}; }
             },
-            _$t: {
-                type: Object,
-                value(){ return {}; }
-            },
+            _$t: Object,
             /**
              * Object containing fetched translation.
              */
-            $t: {
-                type: Object,
-                value: null
-            }
+            $t: Object
         },
         observers: [
             '_$tTranslate(_$tBase, _$t)'
