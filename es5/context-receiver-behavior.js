@@ -21,6 +21,7 @@
              */
             $c: Object
         },
+        observers: ['_contextChanged($c.*)'],
         attached: function attached() {
             var _this = this;
 
@@ -31,9 +32,14 @@
             this.fire('context-required', { receiver: this });
             this.$e.addEventListener('context-changed', function (e) {
                 if (e.srcElement !== _this) {
-                    _this.notifyPath('$c.' + e.detail.path, e.detail.value);
+                    _this.notifyPath(e.detail.path, e.detail.value);
                 }
             });
+        },
+        _contextChanged: function _contextChanged(e) {
+            if (this.$e) {
+                this.$e.fire('context-changed', { path: e.path, value: e.value });
+            }
         }
     };
     JS.ContextReceiverBehavior = [JS.ContextReceiverBehaviorImpl, JS.EventBusListenerBehavior];

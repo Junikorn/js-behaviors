@@ -12,10 +12,6 @@
         properties: {
             /**
              * Synchronised context object (you can initialize it yourself with default values)
-             *
-             * Available methods:
-             * - `set(path, value)` - set context path value & trigger change notification on all subscribed elements
-             * - `notifyPath(path, value)` - trigger path change notification on all subscribed elements
              */
             $c: {
                 type: Object,
@@ -24,24 +20,6 @@
         },
         listeners: {
             'context-required': '_attachContext'
-        },
-        attached(){
-            if(!this.$c.set){
-                Object.defineProperties(this.$c, {
-                    'set': {
-                        enumerable: false, value: function set(path, value, context){
-                            this.set('$c.' + path, value);
-                            (context || this).$e.fire('context-changed', { path: path, value: value });
-                        }.bind(this)
-                    },
-                    notifyPath: {
-                        enumerable: false, value: function notifyPath(path, value, context){
-                            this.notifyPath('$c.' + path, value);
-                            (context || this).$e.fire('context-changed', { path: path, value: value });
-                        }.bind(this)
-                    }
-                });
-            }
         },
         /**
          * Method attaching context to listening child element
@@ -54,6 +32,6 @@
             }
         }
     };
-    JS.ContextProviderBehavior = [JS.ContextProviderBehaviorImpl, JS.EventBusListenerBehavior];
+    JS.ContextProviderBehavior = [JS.ContextProviderBehaviorImpl, JS.ContextReceiverBehaviorImpl, JS.EventBusListenerBehavior];
 
 })();

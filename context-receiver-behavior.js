@@ -19,6 +19,7 @@
              */
             $c: Object
         },
+        observers: ['_contextChanged($c.*)'],
         attached(){
             /**
              * Fired when element is attached. Subscribes to parent context
@@ -27,9 +28,14 @@
             this.fire('context-required', { receiver: this });
             this.$e.addEventListener('context-changed', (e) => {
                 if(e.srcElement !== this){
-                    this.notifyPath('$c.' + e.detail.path, e.detail.value);
+                    this.notifyPath(e.detail.path, e.detail.value);
                 }
             });
+        },
+        _contextChanged(e){
+            if(this.$e){
+                this.$e.fire('context-changed', { path: e.path, value: e.value });
+            }
         }
     };
     JS.ContextReceiverBehavior = [JS.ContextReceiverBehaviorImpl, JS.EventBusListenerBehavior];
