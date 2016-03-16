@@ -3,6 +3,8 @@
 
     window.JS = window.JS || {};
 
+    var fileRegex = /^file:\/\//i;
+
     /**
      * Class providing reasonable XHR handling based on `<iron-request>` with some minor tweaks
      *
@@ -240,7 +242,7 @@
             var status = this.xhr.status || 0;
             // Note: if we are using the file:// protocol, the status code will be 0
             // for all outcomes (successful or otherwise).
-            return status === 0 || (status >= 200 && status < 300);
+            return (fileRegex.test(this.url) && status === 0) || (status >= 200 && status < 300);
         }
     }
 
