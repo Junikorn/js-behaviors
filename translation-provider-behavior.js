@@ -96,6 +96,13 @@
             if(element !== this){
                 e.stopPropagation();
                 array.push(element);
+                if(this.$t){ //set translation if already acquired
+                    if(detail.target){
+                        element.set('$t', this.$t);
+                    }else{
+                        element.set('_$tBase', this.$t);
+                    }
+                }
             }
         },
         //Method unregistering elements that no longer require translation
