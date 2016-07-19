@@ -37,7 +37,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
             this.body = options.body;
             this.headers = options.headers || {};
             if (this.method !== 'GET') {
-                this.headers['Content-Type'] = this.headers['Content-Type'] || typeof options.body === 'string' ? 'application/x-www-form-urlencoded' : 'application/json';
+                this.headers['Content-Type'] = this.headers['Content-Type'] || (typeof options.body === 'string' ? 'application/x-www-form-urlencoded' : 'application/json');
             }
             this.handleAs = options.handleAs;
 
