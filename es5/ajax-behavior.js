@@ -80,6 +80,19 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
                     loaded: progress.loaded,
                     total: progress.total
                 };
+                if (typeof _this.onProgress === 'function') {
+                    _this.onProgress(_this.progress, progress);
+                }
+            });
+
+            xhr.upload.addEventListener('progress', function (progress) {
+                _this.uploadProgress = {
+                    loaded: progress.loaded,
+                    total: progress.total
+                };
+                if (typeof _this.onUploadProgress === 'function') {
+                    _this.onUploadProgress(_this.uploadProgress, progress);
+                }
             });
 
             xhr.addEventListener('error', function (error) {

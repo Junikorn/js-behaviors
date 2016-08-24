@@ -71,6 +71,19 @@
                     loaded: progress.loaded,
                     total: progress.total
                 };
+                if(typeof(this.onProgress) === 'function'){
+                    this.onProgress(this.progress, progress);
+                }
+            });
+
+            xhr.upload.addEventListener('progress', (progress) => {
+                this.uploadProgress = {
+                    loaded: progress.loaded,
+                    total: progress.total
+                };
+                if(typeof(this.onUploadProgress) === 'function'){
+                    this.onUploadProgress(this.uploadProgress, progress);
+                }
             });
 
             xhr.addEventListener('error', (error) => {
