@@ -32,11 +32,11 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
         _createClass(EventBusConnector, [{
             key: 'fire',
-            value: function fire(event, data) {
+            value: function fire(event, data, triggerSelf) {
                 var _this = this;
 
                 connectors.forEach(function (val) {
-                    if (val[event]) {
+                    if (val[event] && (triggerSelf || val !== _this.connector)) {
                         val[event].forEach(function (val) {
                             try {
                                 val({
@@ -117,7 +117,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
              * Available methods:
              * - `addEventListener(eventName, callback)` - adds event listener to bus and returns EventListenerDescriptor
              * - `removeEventListener(eventListenerDescriptor)` - removes event listener from bus
-             * - `fire(eventName, details)` - fires event on bus
+             * - `fire(eventName, details, triggerSelf)` - fires event on bus
              * - `unsubscribe()` - unsubscribes from event bus
              * - `subscribe()` - subscribes to event bus
              *

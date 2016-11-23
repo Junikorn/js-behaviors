@@ -13,9 +13,9 @@
         /**
          * @method $e.fire
          */
-        fire(event, data){
+        fire(event, data, triggerSelf){
             connectors.forEach((val) => {
-                if(val[event]){
+                if(val[event] && (triggerSelf || val !== this.connector)){
                     val[event].forEach((val) => {
                         try{
                             val({
@@ -84,7 +84,7 @@
              * Available methods:
              * - `addEventListener(eventName, callback)` - adds event listener to bus and returns EventListenerDescriptor
              * - `removeEventListener(eventListenerDescriptor)` - removes event listener from bus
-             * - `fire(eventName, details)` - fires event on bus
+             * - `fire(eventName, details, triggerSelf)` - fires event on bus
              * - `unsubscribe()` - unsubscribes from event bus
              * - `subscribe()` - subscribes to event bus
              *
