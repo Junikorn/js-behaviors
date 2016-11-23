@@ -315,6 +315,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
             this.fire('request-sent', request);
         }
 
+        //TODO: add dynamic interceptor by event subscription based on DOM structure instead of global interceptors
         ajax.interceptors.forEach(function (interceptor) {
             if (interceptor.res && interceptor.rej || interceptor.res) {
                 promise.then(interceptor.res, interceptor.rej);
@@ -402,9 +403,6 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
      * @polymerBehavior JS.AjaxBehavior
      */
     JS.AjaxBehavior = {
-        attached: function attached() {
-            this.$http = ajax;
-        },
         /**
          * Method performing ajax request based on passed configuration. Returns request Promise
          *

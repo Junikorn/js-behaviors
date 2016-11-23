@@ -36,6 +36,9 @@
                 e.stopPropagation();
                 if (this.openedView) {
                     this.set('openedView.opened', false);
+                    if (template = this.openedView.$$('template[view]')) {
+                        template.render();
+                    }
                     this.openedView.close();
                 }
                 this.set('openedView', view);

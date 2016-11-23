@@ -1,9 +1,7 @@
 js-behaviors
 ============
 
-[![Bower version](https://badge.fury.io/bo/js-behaviors.svg)](http://badge.fury.io/bo/js-behaviors)
-
-See the [component page](https://polymoar.github.io/components/js-behaviors/es5) for documentation.
+See the .js files for inline documentation.
 
 This package is written using ES2015. If you do not use [babel](https://babeljs.io/) in your build please import sources from es5 directory.
 
@@ -14,26 +12,6 @@ Install the component using [Bower](http://bower.io/):
 ```sh
 $ bower install js-behaviors --save
 ```
-
-## Browser Compatibility
-
-This should be working on all latest version of browsers.
-
-![IE](https://raw.github.com/paulirish/browser-logos/master/internet-explorer/internet-explorer_48x48.png) | ![Chrome](https://raw.github.com/paulirish/browser-logos/master/chrome/chrome_48x48.png) | ![Firefox](https://raw.github.com/paulirish/browser-logos/master/firefox/firefox_48x48.png) | ![Opera](https://raw.github.com/paulirish/browser-logos/master/opera/opera_48x48.png) | ![Safari](https://raw.github.com/paulirish/browser-logos/master/safari/safari_48x48.png)
---- | --- | --- | --- | --- |
-IE 10+ ✔ | Latest ✔ | Latest ✔ | Latest ✔ | Latest ✔ |
-
-## Contributing
-
-1. Fork it!
-2. Create your feature branch: `git checkout -b my-new-feature`
-3. Commit your changes: `git commit -m 'Add some feature'`
-4. Push to the branch: `git push origin my-new-feature`
-5. Submit a pull request :D
-
-## History
-
-For detailed changelog, check [Releases](https://github.com/Junikorn/js-behaviors/releases).
 
 ## License (BSD)
 
