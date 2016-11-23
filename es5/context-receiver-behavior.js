@@ -19,9 +19,16 @@
              * - `set(path, value)` - set context path value & trigger change notification on all subscribed elements
              * - `notifyPath(path, value)` - trigger path change notification on all subscribed elements
              */
-            $c: Object
+            $c: Object,
+            _$cChanges: {
+                type: Array,
+                value: function value() {
+                    return [];
+                }
+            },
+            _$cListener: Object
         },
-        observers: ['_contextChanged($c.*)'],
+        observers: ['_$cContextChanged($c.*)'],
         attached: function attached() {
             var _this = this;
 
@@ -30,15 +37,25 @@
              * @event context-required
              */
             this.fire('context-required', { receiver: this });
-            this.$e.addEventListener('context-changed', function (e) {
-                if (e.srcElement !== _this) {
-                    _this.notifyPath(e.detail.path, e.detail.value);
-                }
+            this._$cListener = this.$e.addEventListener('context-changed', function (e) {
+                _this._$cChanges.push(e.detail);
+                _this.notifyPath(e.detail.path, e.detail.value);
             });
         },
-        _contextChanged: function _contextChanged(e) {
+        detached: function detached() {
+            this.$e.removeEventListener(this._$cListener);
+        },
+        _$cContextChanged: function _$cContextChanged(e) {
             if (this.$e) {
-                this.$e.fire('context-changed', { path: e.path, value: e.value });
+                var externalChanges = this._$cChanges,
+                    externalChange = this._$cChanges.find(function (change) {
+                    return change.path === e.path && change.value === e.value;
+                });
+                if (!externalChange) {
+                    this.$e.fire('context-changed', { path: e.path, value: e.value });
+                } else {
+                    externalChanges.splice(externalChanges.indexOf(externalChange), 1);
+                }
             }
         }
     };
