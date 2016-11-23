@@ -23,15 +23,16 @@
             }
         },
         listeners: {
-            'context-required': '_attachContext'
+            'context-required': '_$cAttachContext'
         },
         /**
          * Method attaching context to listening child element
          * @listens context-required
          */
-        _attachContext: function _attachContext(e) {
+        _$cAttachContext: function _$cAttachContext(e) {
             if (e.detail.receiver !== this) {
                 e.stopPropagation();
+                e.detail.receiver._$cChanges.push({ path: '$c', value: this.$c });
                 e.detail.receiver.set('$c', this.$c);
             }
         }
